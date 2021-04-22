@@ -2,7 +2,7 @@
 
 read directory
 
-if [ -d $dir ];
+if [ -d $directory ];
 then
     printf "%s exists \n current dir: %s \n" $directory $PWD
 else
