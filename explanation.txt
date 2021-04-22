@@ -1,0 +1,55 @@
+script to create in /usr/local/sbin/
+****************************************
+
+#!/bin/sh
+
+/home/hp/Documents/OS/task1.sh 23 25
+#/home/hp/Documents/OS/task2.sh
+
+
+////////////////////////////
+
+script to create in /etc/init.d
+********************************
+
+#!/bin/sh
+
+. /etc/init.d
+
+[ -f /usr/local/sbin/task3.sh ] || exit 0
+
+case "$1" in
+
+        start)
+                echo "script started...."
+                /usr/local/sbin/task3.sh &
+                echo "--------------------"
+                touch /var/lock/subsys/task3
+                ;;
+        stop)
+                echo -n "stopping"
+                killall -q -9 task3.sh &
+                rm -f /var/lock/subsys/task3
+                ;;
+        status)
+                status task3
+                ;;
+        restart|reload)
+                $0 stop
+                $0 start
+                ;;
+        *)
+                echo "start, stop, restart|reload, status"
+                exit 1
+esac
+
+exit 0
+
+
+
+***************************************8
+
+after creating these scripts, run:
+
+sudo update-rc.d task3 start 99 3 5 . stop 01 3 5 .
+
